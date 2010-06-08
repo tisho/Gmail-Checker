@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<string></string>
+		<key>Key</key>
+		<string>username</string>
+		<key>Password</key>
+		<false/>
+		<key>Secure</key>
+		<true/>
+		<key>Title</key>
+		<string>Username</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>password</string>
+		<key>Password</key>
+		<true/>
+		<key>Secure</key>
+		<true/>
+		<key>Title</key>
+		<string>Password</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Type</key>
+		<string>Separator</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>600000</real>
+		<key>Key</key>
+		<string>update</string>
+		<key>MaximumValue</key>
+		<real>120</real>
+		<key>MinimumValue</key>
+		<real>1</real>
+		<key>Secure</key>
+		<false/>
+		<key>Title</key>
+		<string>Update interval</string>
+		<key>Titles</key>
+		<array>
+			<string>1 minute</string>
+			<string>5 minutes</string>
+			<string>10 minutes</string>
+			<string>15 minutes</string>
+			<string>20 minutes</string>
+			<string>30 minutes</string>
+			<string>45 minutes</string>
+			<string>60 minutes</string>
+		</array>
+		<key>Type</key>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<real>60000</real>
+			<real>300000</real>
+			<real>600000</real>
+			<real>900000</real>
+			<real>12000000</real>
+			<real>18000000</real>
+			<real>27000000</real>
+			<real>36000000</real>
+		</array>
+	</dict>
+</array>
+</plist>

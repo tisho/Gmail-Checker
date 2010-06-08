@@ -7,11 +7,10 @@
     <script>
     safari.application.addEventListener("command", clickHandler, false);
     safari.application.addEventListener("validate", checkHandler, false);
+    safari.extension.settings.addEventListener("change", settingsChanged, false);
     
     connectionOptions = {
       url: "https://mail.google.com/mail/feed/atom",
-      username: "victor.andree",
-      password: "pex85fa.,%20lyx%5Cb4l"
     };
     
     function clickHandler() {
@@ -19,8 +18,18 @@
       newTab.url = "http://mail.google.com";
     }
     
-    function checkHandler() {      
+    function checkHandler() {
+      var username = safari.extension.secureSettings.getItem("username");
+      var password = safari.extension.secureSettings.getItem("password");
+      
+      if (!username || !password) {
+        return;
+      }
+      
       var connect = $.extend({
+        username: username,
+        password: escape(password),
+        
         success: function(d) {
           $.each(safari.extension.toolbarItems, function(i, v) {
             v.badge = $("entry", d).size();
@@ -30,7 +39,14 @@
       $.ajax(connect);
     }
     
-    safari.extension.globalPage.contentWindow.setInterval(checkHandler, 10000);
+    function settingsChanged(event) {
+      if (event.key == "update") {
+        safari.extension.globalPage.contentWindow.clearInterval(updater);
+        updater = safari.extension.globalPage.contentWindow.setInterval(checkHandler, event.newValue);
+      }
+    }
+    
+    var updater = safari.extension.globalPage.contentWindow.setInterval(checkHandler, safari.extension.settings.getItem("update"));
     </script>
   </head>
 </html>
