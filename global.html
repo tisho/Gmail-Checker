@@ -5,7 +5,8 @@
     <title>Gmail Checker</title>
     <script src="jquery-1.4.2.min.js"></script>
     <script>
-    safari.application.addEventListener("command", checkHandler, false);
+    safari.application.addEventListener("command", clickHandler, false);
+    safari.application.addEventListener("validate", checkHandler, false);
     
     connectionOptions = {
       url: "https://mail.google.com/mail/feed/atom",
@@ -13,14 +14,23 @@
       password: "pex85fa.,%20lyx%5Cb4l"
     };
     
-    function checkHandler() {
+    function clickHandler() {
+      var newTab = safari.application.activeBrowserWindow.openTab();
+      newTab.url = "http://mail.google.com";
+    }
+    
+    function checkHandler() {      
       var connect = $.extend({
         success: function(d) {
-          safari.extension.toolbarItems[0].badge = $("entry", d).size();
+          $.each(safari.extension.toolbarItems, function(i, v) {
+            v.badge = $("entry", d).size();
+          });
         }
       }, connectionOptions);
       $.ajax(connect);
     }
+    
+    safari.extension.globalPage.contentWindow.setInterval(checkHandler, 10000);
     </script>
   </head>
 </html>
