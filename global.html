@@ -5,52 +5,62 @@
     <title>Gmail Checker</title>
     <script src="jquery-1.4.2.min.js"></script>
     <script>
-    safari.application.addEventListener("command", clickHandler, false);
-    safari.application.addEventListener("validate", checkHandler, false);
+    safari.application.addEventListener("command", commandHandler, false);
+    safari.application.addEventListener("validate", checkInbox, false);
     safari.extension.settings.addEventListener("change", settingsChanged, false);
     
     connectionOptions = {
       url: "https://mail.google.com/mail/feed/atom",
     };
     
-    function clickHandler() {
+    function commandHandler() {
       var newTab = safari.application.activeBrowserWindow.openTab();
       newTab.url = "http://mail.google.com";
     }
     
-    function checkHandler() {
-      var username = safari.extension.secureSettings.getItem("username");
-      var password = safari.extension.secureSettings.getItem("password");
-      
-      if (!username || !password) {
-        return;
-      }
-      
-      var connect = $.extend({
-        username: username,
-        password: escape(password),
-        
+    function checkInbox() {      
+      doIfLoggedIn(function() {
+        $.ajax({
+          url: "https://mail.google.com/mail/feed/atom",
+          success: function(d) { updateBadge($("entry", d).size()); }
+        });
+      },
+      function() { updateBadge(0); });
+    }
+    
+    function doIfLoggedIn(func, func_else) {
+      $.ajax({
+        url: "http://mail.google.com/mail/",
         success: function(d) {
-          $.each(safari.extension.toolbarItems, function(i, v) {
-            v.badge = $("entry", d).size();
-          });
-        },
-        error: function(r, status, exception) {
-          alert(r + " " + status);
-          return false;
+          // A crude login check: The Google login page uses Quirks mode; the "Loading inbox" screen is HTML5
+          // This is to avoid calling the Feed unless we're authorized (since this will display a HTTP Auth sheet)
+          
+          // It's not perfect – because (Safari is especially crappy here) there's sometimes lag
+          // between Gmail login and Feed auth
+          if (!d.indexOf("<!DOCTYPE html>")) {
+            func();
+          }
+          else {
+            func_else();
+          }
         }
-      }, connectionOptions);
-      $.ajax(connect);
+      });
+    }
+    
+    function updateBadge(n) {
+      $.each(safari.extension.toolbarItems, function(i, v) {
+        v.badge = n;
+      });
     }
     
     function settingsChanged(event) {
       if (event.key == "update") {
         safari.extension.globalPage.contentWindow.clearInterval(updater);
-        updater = safari.extension.globalPage.contentWindow.setInterval(checkHandler, event.newValue);
+        updater = safari.extension.globalPage.contentWindow.setInterval(checkInbox, event.newValue * 1000);
       }
     }
     
-    var updater = safari.extension.globalPage.contentWindow.setInterval(checkHandler, safari.extension.settings.getItem("update"));
+    var updater = safari.extension.globalPage.contentWindow.setInterval(checkInbox, safari.extension.settings.getItem("update") * 1000);
     </script>
   </head>
 </html>
