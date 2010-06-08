@@ -34,6 +34,10 @@
           $.each(safari.extension.toolbarItems, function(i, v) {
             v.badge = $("entry", d).size();
           });
+        },
+        error: function(r, status, exception) {
+          alert(r + " " + status);
+          return false;
         }
       }, connectionOptions);
       $.ajax(connect);
