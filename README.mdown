@@ -1,0 +1,36 @@
+Gmail Checker 0.2 by Victor Andrée
+==================================
+
+This extension will periodically check your Gmail for new e-mails. It also supports
+Google apps for your domain. Just enable extensions in Safari 5, install the
+extension and configure it under your preferences.
+
+The extension will automatically check the Gmail account that you're currently logged
+into. It does not currently support several accounts, nor checking both Gmail and
+a custom app mail.
+
+The latest version is always available at [lifefrombelow.com/gmail-checker](http://lifefrombelow.com/gmail-checker) (the
+extension should update automatically).
+
+All icons are by Jonathan Shamir.
+
+HTTP Auth bug
+-------------
+
+There is one known bug: You may sometimes get an authentication prompt for a "New mail feed".
+This is because WebKit doesn't quite follow the XMLHttpRequest spec. You should simply be able
+to dismiss this prompt if you see it (it should only appear just when you've logged in or out
+of your account).
+
+Support
+-------
+
+If you have questions or feature requests, please submit them to [victor@lifefrombelow.com](mailto:victor@lifefrombelow.com).
+
+Source code
+-----------
+
+The source code is available at [github.com](http://github.com/vicvicvic/Gmail-Checker).
+
+You may freely use the source code in this project for whatever purpose. The icons (toolbar and extension icons)
+are however the intellectual property of Jonathan Shamir.
