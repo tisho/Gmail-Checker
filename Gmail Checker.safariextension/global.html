@@ -6,7 +6,7 @@
     <script src="jquery-1.4.2.min.js"></script>
     <script>
     safari.application.addEventListener("command", commandHandler, false);
-    safari.application.addEventListener("validate", function(event) { checkInbox(); }, false);
+    safari.application.addEventListener("validate", function(event) { updateUnreadCount(); }, false);
     safari.extension.settings.addEventListener("change", settingsChanged, false);
     
     function getGmailUrl() {
@@ -56,7 +56,7 @@
       newTab.url = getInboxUrl();
     }
     
-    function checkInbox() {
+    function updateUnreadCount() {
       doIfLoggedIn(
         function() {
           $.ajax({
@@ -100,14 +100,14 @@
     function settingsChanged(event) {
       if (event.key == "update") {
         safari.extension.globalPage.contentWindow.clearInterval(updater);
-        updater = safari.extension.globalPage.contentWindow.setInterval(checkInbox, event.newValue * 1000);
+        updater = safari.extension.globalPage.contentWindow.setInterval(updateUnreadCount, event.newValue * 1000);
       }
       if (event.key == "check_all") {
-        checkInbox();
+        updateUnreadCount();
       }
     }
     
-    var updater = safari.extension.globalPage.contentWindow.setInterval(checkInbox, safari.extension.settings.getItem("update") * 1000);
+    var updater = safari.extension.globalPage.contentWindow.setInterval(updateUnreadCount, safari.extension.settings.getItem("update") * 1000);
     </script>
   </head>
 </html>
