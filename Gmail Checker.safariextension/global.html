@@ -45,6 +45,7 @@
             var browserWindow = safari.application.browserWindows[i];
             
             browserWindow.activate();
+            browserWindow.tabs[j].url = getGmailUrl();
             browserWindow.tabs[j].activate();
             return;
           }
