@@ -10,7 +10,7 @@
     safari.extension.settings.addEventListener("change", settingsChanged, false);
     
     function getGmailUrl() {
-      var url = "http://mail.google.com";
+      var url = "https://mail.google.com";
       var custom_domain = safari.extension.settings.getItem("custom_domain");
       
       if (custom_domain) {
@@ -26,6 +26,31 @@
     }
     
     function commandHandler() {
+      // If the user does not have any open pages, it would be nice to just go to Gmail
+      // without creating a new tab. Unfortunately we can't check for "empty" or "top sites"
+      // prevalence currently (without messing up the domain policies).
+      
+      // if (safari.application.browserWindows.length == 1 && safari.application.browserWindows[0].tabs.length == 1) {
+      //  safari.application.activeBrowserWindow.activeTab.url == getGmailUrl();
+      //  return;
+      // }
+      
+      // Don't open a new tab if we've already got Gmail open somewhere
+      for (i in safari.application.browserWindows) {
+        for (j in safari.application.browserWindows[i].tabs) {
+          // We can't access the SafariBrowserTab.url if we can't access that URL!
+          if (safari.application.browserWindows[i].tabs[j].url && safari.application.browserWindows[i].tabs[j].url.indexOf(getGmailUrl()) == 0) {
+            // Because when we activate this window below, the array's index will change
+            // Use Array.forEach instead? Meh, makes escaping early more awkward.
+            var browserWindow = safari.application.browserWindows[i];
+            
+            browserWindow.activate();
+            browserWindow.tabs[j].activate();
+            return;
+          }
+        }
+      }
+      
       var newTab = safari.application.activeBrowserWindow.openTab();
       newTab.url = getGmailUrl();
     }
