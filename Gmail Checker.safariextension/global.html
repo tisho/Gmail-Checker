@@ -13,12 +13,8 @@
       var url = "https://mail.google.com";
       var custom_domain = safari.extension.settings.getItem("custom_domain");
       
-      if (custom_domain) {
-        url += "/a/" + custom_domain;
-        
-        if (custom_domain[custom_domain.length - 1] != "/")
-          url += "/";
-      }
+      if (custom_domain)
+        url += "/a/" + custom_domain + ((custom_domain[custom_domain.length - 1] != "/") ? "/" : "");
       else
         url += "/mail/";
       
