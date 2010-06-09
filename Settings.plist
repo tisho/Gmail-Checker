@@ -2,6 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
+  <dict>
+		<key>Title</key>
+		<string>Google Apps for your domain (optional)</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>custom_domain</string>
+		<key>Title</key>
+		<string>Your domain</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Type</key>
+		<string>Separator</string>
+	</dict>
 	<dict>
 		<key>DefaultValue</key>
 		<real>60</real>
