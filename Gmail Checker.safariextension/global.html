@@ -6,7 +6,7 @@
     <script src="jquery-1.4.2.min.js"></script>
     <script>
     safari.application.addEventListener("command", commandHandler, false);
-    safari.application.addEventListener("validate", checkInbox, false);
+    safari.application.addEventListener("validate", function(event) { checkInbox(); }, false);
     safari.extension.settings.addEventListener("change", settingsChanged, false);
     
     function getGmailUrl() {
@@ -25,7 +25,7 @@
       return url;
     }
     
-    function commandHandler() {
+    function commandHandler(event) {
       // If the user does not have any open pages, it would be nice to just go to Gmail
       // without creating a new tab. Unfortunately we can't check for "empty" or "top sites"
       // prevalence currently (without messing up the domain policies).
@@ -56,7 +56,7 @@
       newTab.url = getGmailUrl();
     }
     
-    function checkInbox() {      
+    function checkInbox() {
       doIfLoggedIn(
         function() {
           $.ajax({
