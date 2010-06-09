@@ -25,6 +25,10 @@
       return url;
     }
     
+    function getInboxUrl() {
+      return getGmailUrl() + (safari.extension.settings.getItem("check_all") ? "#all" : "");
+    }
+    
     function commandHandler(event) {
       // If the user does not have any open pages, it would be nice to just go to Gmail
       // without creating a new tab. Unfortunately we can't check for "empty" or "top sites"
@@ -45,7 +49,7 @@
             var browserWindow = safari.application.browserWindows[i];
             
             browserWindow.activate();
-            browserWindow.tabs[j].url = getGmailUrl();
+            browserWindow.tabs[j].url = getInboxUrl();
             browserWindow.tabs[j].activate();
             return;
           }
@@ -53,14 +57,14 @@
       }
       
       var newTab = safari.application.activeBrowserWindow.openTab();
-      newTab.url = getGmailUrl();
+      newTab.url = getInboxUrl();
     }
     
     function checkInbox() {
       doIfLoggedIn(
         function() {
           $.ajax({
-            url: getGmailUrl() + "feed/atom",
+            url: getGmailUrl() + "feed/atom" + (safari.extension.settings.getItem("check_all") ? "/unread" : ""),
             success: function(d) { updateBadge($("entry", d).size()); }
           });
         },
@@ -101,6 +105,9 @@
       if (event.key == "update") {
         safari.extension.globalPage.contentWindow.clearInterval(updater);
         updater = safari.extension.globalPage.contentWindow.setInterval(checkInbox, event.newValue * 1000);
+      }
+      if (event.key == "check_all") {
+        checkInbox();
       }
     }
     

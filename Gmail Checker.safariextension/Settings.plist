@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-  <dict>
+	<dict>
 		<key>Title</key>
 		<string>Google Apps for your domain (optional)</string>
 		<key>Type</key>
@@ -53,6 +53,16 @@
 			<real>600</real>
 			<real>900</real>
 		</array>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>check_all</string>
+		<key>Title</key>
+		<string>Check for all unread mail</string>
+		<key>Type</key>
+		<string>CheckBox</string>
 	</dict>
 </array>
 </plist>
