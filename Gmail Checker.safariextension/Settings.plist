@@ -60,7 +60,7 @@
 		<key>Key</key>
 		<string>check_all</string>
 		<key>Title</key>
-		<string>Check for all unread mail</string>
+		<string>Check all folders for unread mail</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
