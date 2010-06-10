@@ -98,12 +98,14 @@
     }
     
     function settingsChanged(event) {
-      if (event.key == "update") {
-        safari.extension.globalPage.contentWindow.clearInterval(updater);
-        updater = safari.extension.globalPage.contentWindow.setInterval(updateUnreadCount, event.newValue * 1000);
-      }
-      if (event.key == "check_all") {
-        updateUnreadCount();
+      switch (event.key) {
+        case "update":
+          safari.extension.globalPage.contentWindow.clearInterval(updater);
+          updater = safari.extension.globalPage.contentWindow.setInterval(updateUnreadCount, event.newValue * 1000);
+        break;
+        case "check_all":
+          updateUnreadCount();
+        break;
       }
     }
     
