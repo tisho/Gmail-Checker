@@ -1,4 +1,4 @@
-Gmail Checker 0.2 by Victor Andrée
+Gmail Checker 0.3 by Victor Andrée
 ==================================
 
 This extension will periodically check your Gmail for new e-mails. It also supports
@@ -13,6 +13,19 @@ The latest version is always available at [lifefrombelow.com/gmail-checker](http
 extension should update automatically).
 
 All icons are by Jonathan Shamir.
+
+Changelog
+---------
+
+### 0.3
+
+* Does not create new tabs if Gmail is already open somewhere in Safari.
+* Optionally checks everywhere (outside inbox) for unread mails.
+
+### 0.2
+
+* Support for Google Apps for your Domain.
+* Delicious icons by Jonathan Shamir.
 
 HTTP Auth bug
 -------------
