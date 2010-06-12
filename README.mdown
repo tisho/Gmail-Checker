@@ -1,4 +1,4 @@
-Gmail Checker 0.3 by Victor Andrée
+Gmail Checker 0.4 by Victor Andrée
 ==================================
 
 This extension will periodically check your Gmail for new e-mails. It also supports
