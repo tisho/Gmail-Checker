@@ -17,6 +17,12 @@ All icons are by Jonathan Shamir.
 Changelog
 ---------
 
+### 0.4
+
+* The toolbar item's tooltip provides a list of unread e-mails (up to 20)
+* The toolbar badge correctly reports the number of unread e-mails (previously limited to 20)
+* Partial Swedish translation
+
 ### 0.3
 
 * Does not create new tabs if Gmail is already open somewhere in Safari.
