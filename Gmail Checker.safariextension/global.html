@@ -61,11 +61,11 @@
         function() {
           $.ajax({
             url: getGmailUrl() + "feed/atom" + (safari.extension.settings.getItem("check_all") ? "/unread" : ""),
-            success: function(d) { updateToolbar($("entry title", d).map(function() { return $(this).text(); }).get()); }
+            success: function(d) { updateToolbar($("fullcount", d).text(), $("entry title", d).map(function() { return $(this).text(); }).get()); }
           });
         },
         function() {
-          updateToolbar([]);
+          updateToolbar(0, []);
         }
       );
     }
@@ -91,9 +91,9 @@
       });
     }
     
-    function updateToolbar(unread_mails) {
+    function updateToolbar(fullcount, unread_mails) {
       $.each(safari.extension.toolbarItems, function(i, v) {
-        v.badge = unread_mails.length;
+        v.badge = fullcount;
         v.toolTip = unread_mails.length ? ("• " + unread_mails.join("\n• ")) : "Gmail";
       });
     }
